@@ -39,7 +39,7 @@ fn naive(bars: &Vec<i32>) -> i32 {
         if bars[0] == 0 || bars.len() == 1 {
             bars.remove(0);
         }
-        if bars.len() == 0 {
+        if bars.is_empty() {
             break;
         }
     }
@@ -78,9 +78,9 @@ impl<T: Copy> Stack<T> {
         Stack { data: Vec::<T>::new(), length: 0 }
     }
 
-    fn append(&mut self, x: T) {
-        self.data.push(x);
+    fn push(&mut self, x: T) {
         self.length += 1;
+        self.data.push(x);
     }
 
     fn pop(&mut self) -> T {
@@ -98,7 +98,7 @@ impl<T: Copy> Stack<T> {
 
 }
 
-
+// O(n)
 fn stack(bars: &Vec<i32>) -> i32 {
     let mut stack = Stack::<usize>::new();
     let mut max_area = 0;
@@ -106,7 +106,7 @@ fn stack(bars: &Vec<i32>) -> i32 {
 
     while i < bars.len() {
         if stack.is_empty() || bars[i] >= bars[stack.last()] {
-            stack.append(i);
+            stack.push(i);
             i += 1;
         } else {
             let top = stack.pop();
